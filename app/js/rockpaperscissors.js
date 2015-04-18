@@ -21,6 +21,21 @@ function randomPlay() {
 /*           Write Your Code Below            */
 ////////////////////////////////////////////////
 
+var roundsToWin = null;
+
+function playTo() {
+    //get user to enter number of wins (rounds) required to win game
+    //check that entry is a valid positive integer, return null if not.
+    var wins;
+    wins = prompt();
+    if ((wins > 0) && ((wins * 10) % 10 === 0)) { 
+        return wins;
+    } else
+    { console.log('Please enter an integer greater than zero.');
+      return null;
+    }
+}
+
 function getPlayerMove(move) {
     // Write an expression that operates on a variable called `move`
     // If a `move` has a value, your expression should evaluate to that value.
@@ -97,4 +112,38 @@ function playToFive() {
     return [playerWins, computerWins];
 }
 
-playToFive();
+function play(wins) {
+    var playerWins = 0;
+    var computerWins = 0;
+    var round = 1;
+    // Write code that plays 'Rock, Paper, Scissors' until either the player or the computer has won specified (wins) times.
+    while ((playerWins < wins) && (computerWins < wins)) {
+      console.log('Round '+round);
+      switch (getWinner(getPlayerMove(getInput()),getComputerMove(randomPlay()))) {
+        case "player":
+           playerWins += 1;
+           round += 1;
+           console.log('Player won ['+playerWins+']');
+           break;
+        case "computer":
+           computerWins += 1;
+           round += 1;
+           console.log('Computer won ['+computerWins+']');
+           break;
+        case "tie":
+           round += 1;
+           console.log('Tie');
+           break;
+        default:
+           break;
+      }
+    }
+    return [playerWins, computerWins];
+}
+
+console.log("Let's play Rock, Paper, Scissors");
+console.log("Please enter how many wins required to win game.");  
+while (roundsToWin === null) { roundsToWin = playTo() }
+play(roundsToWin);
+
+//playToFive();
